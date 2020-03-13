@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Instascan</title>
-    
+
     <style>
-      #preview{
-      transform: scaleX(-1);
-      filter: FlipH;
-    }    
+        #preview{
+            border-width: 100px;
+            border-color: black;
+            transform: rotateY(360deg);
+    -webkit-transform:rotateY(360deg); /* Safari and Chrome */
+    -moz-transform:rotateY(360deg); /* Firefox */
+        }
     </style>
+    <title>Instascan</title>
     <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" ></script>	
+    <!-- <script src="instascan.min.js" type="text/javascript"> </script> -->
   </head>
-  
-  
   <body>
     <video id="preview"></video>
     <script>
+
         let scanner = new Instascan.Scanner(
             {
-                video: document.getElementById('preview')
+                video: document.getElementById('preview'),
+                mirror: false 
             }
         );
+
+        
         scanner.addListener('scan', function(content) {
             alert('Escaneou o conteudo: ' + content);
             window.open(content, "_blank");
@@ -28,7 +34,7 @@
         Instascan.Camera.getCameras().then(cameras => 
         {
             if(cameras.length > 0){
-                scanner.start(cameras[1]);
+                scanner.start(cameras[0]);
             } else {
                 console.error("Não existe câmera no dispositivo!");
             }
